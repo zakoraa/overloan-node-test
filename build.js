@@ -10,5 +10,11 @@ esbuild.build({
   bundle: true,
   outdir: "dist",
   platform: "neutral",
-  target: "es2019"
+  target: "es2019",
+
+  // PENTING
+  external: [
+    "k6",
+    "k6/*"
+  ]
 }).catch(() => process.exit(1))
