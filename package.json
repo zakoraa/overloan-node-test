@@ -1,0 +1,21 @@
+{
+  "name": "overloan-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "load": "npm run build && k6 run dist/load.test.js",
+    "stress": "npm run build && k6 run dist/stress.test.js",
+    "spike": "npm run build && k6 run dist/spike.test.js",
+    "soak": "npm run build && k6 run dist/soak.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/k6": "^1.6.0",
+    "typescript": "^5.9.3"
+  }
+}
