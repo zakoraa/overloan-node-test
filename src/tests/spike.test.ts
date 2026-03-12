@@ -1,18 +1,23 @@
+import http from "k6/http"
 import { check, sleep } from "k6"
-import { Options } from "k6/options"
-import { getStatus } from "../rpc"
+import { RPC_URL } from "../config"
 
-export const options: Options = {
+
+export const options = {
   stages: [
-    { duration: "30s", target: 50 },
+    { duration: "1m", target: 50 },
     { duration: "10s", target: 2000 },
-    { duration: "1m", target: 2000 },
+    { duration: "2m", target: 2000 },
     { duration: "30s", target: 50 }
-  ]
+  ],
+  thresholds: {
+    http_req_failed: ["rate<0.1"]
+  }
 }
 
 export default function () {
-  const res = getStatus()
+
+  const res = http.get(`${RPC_URL}/block`)
 
   check(res, {
     "status is 200": (r) => r.status === 200

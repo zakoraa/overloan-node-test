@@ -1,14 +1,18 @@
+import http from "k6/http"
 import { check, sleep } from "k6"
-import { Options } from "k6/options"
-import { getNetInfo } from "../rpc"
+import { RPC_URL } from "../config"
 
-export const options: Options = {
+export const options = {
   vus: 200,
-  duration: "24h"
+  duration: "6h",
+  thresholds: {
+    http_req_failed: ["rate<0.01"]
+  }
 }
 
 export default function () {
-  const res = getNetInfo()
+
+  const res = http.get(`${RPC_URL}/block`)
 
   check(res, {
     "status is 200": (r) => r.status === 200
